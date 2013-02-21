@@ -1,0 +1,400 @@
+@main("HWHelp Matrix Calculator") {
+	
+	<!--Ember.js Application-->
+	<script type='text/x-handlebars' data-template-name='application'>
+		<div id='container' class="no-mathjax">
+			<header>
+				<div id="title-slogan">
+					<h1 id="main-title">HWHelp</h1>
+					<p class="italics" id="slogan">
+						Almost cheating <span class="normal red">:)</span>
+					</p>
+				</div>
+				<ul id="nav">
+					<li id="nav_home"><a href="/">Home</a></li>
+					<li id="nav_support"><a href="/support">Support</a></li>
+					<li id="nav_about"><a href="/about">About</a></li>
+				</ul>
+			</header>
+			<div id='main'>
+				<div id="spinner-div"></div>
+				{{outlet}}
+			</div><!--END MAIN-->
+			<footer>
+				<p>Copyright &copy; 2013 SkyArc Studios. All rights reserved.</p>
+			</footer>
+		</div>
+	</script>
+	
+	<!--Ember.js Templates-->
+	<script type='text/x-handlebars' data-template-name='matrix-operations'>
+		<h2>{{title}}</h2>
+		<ul id="matrix-nav">
+			<li><a {{action goToSolve this href=true}} class="button">Solve System</a></li>
+			<li><a {{action goToAddSub this href=true}} class="button">Add/Subtract</a></li>
+			<li><a {{action goToMul this href=true}} class="button">Multiply</a></li>
+			<li><a class="button">Operations</a></li>
+		</ul>
+		<div id="slider-container">
+			<div class="white-background">
+				<div class="question-div">
+				<div class="row-cols-input" id="operations-input">
+					<label for="matrix-operations-rows">Columns/Number of variables/n:</label>
+					{{view App.RealNumberTextField id="matrix-operations-rows" loc=this varName="rows" value=3}}
+					<label for="matrix-operations-cols">Columns/Number of variables/n:</label>
+					{{view App.RealNumberTextField id="matrix-operations-cols" loc=this varName="cols" value=3}}
+				</div><!--END ROWS COLS INPUT-->
+				
+				<div id="matrix-div" class="center">
+					{{view App.MatrixView rowsBinding="rows" colsBinding="cols"}}
+				</div><!--END CLASS: CENTER-->
+				
+				<table id="matrix-operations-options" cell-spacing="10px">
+					<tr>
+						<td>
+							{{view Ember.Checkbox checkedBinding="transpose" id="transpose"}}
+							<label for="transpose">Transpose</label>
+						</td>
+						<td>
+							{{view Ember.Checkbox checkedBinding="trace" id="trace"}}
+							<label for="trace">Trace</label>
+						</td>
+						<td>
+							{{view Ember.Checkbox checkedBinding="rank" id="rank"}}
+							<label for="rank">Rank</label>
+						</td>
+						<td>
+							{{view Ember.Checkbox checkedBinding="lu" id="lu"}}
+							<label for="lu">LU Decomposition</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							{{view Ember.Checkbox checkedBinding="inverse" id="inverse"}}
+							<label for="inverse">Inverse</label>
+						</td>
+						<td>
+							{{view Ember.Checkbox checkedBinding="eigen" id="eigen"}}
+							<label for="eigen">Eigenvalues & Eigenvectors</label>
+						</td>
+						<td>
+							{{view Ember.Checkbox checkedBinding="determinant" id="determinant"}}
+							<label for="determinant">Determinant</label>
+						</td>
+						<td>
+							{{view Ember.Checkbox checkedBinding="reduce" id="reduce"}}
+							<label for="reduce">Reduced Row Echelon</label>
+						</td>
+					</tr>
+				</table><!--END MATRIX OPERATIONS OPTIONS-->
+				
+				<div id="result-formatting">
+					<label for="result-format">Result Format: </label>
+					<div class='radio-container'>
+						{{view App.RadioButton id="fraction" option="fraction" group="result-formating" valueBinding="resultFormating"}}
+						<label for="fraction">Fraction</label>
+				    	{{view App.RadioButton id="decimal" option="decimal" group="result-formating" valueBinding="resultFormating"}}
+						<label for="decimal">Decimal</label>
+					</div>
+					<div id='decimal-formatting'>
+						{{#if isDecimal}}
+						  	<p>Show results with</p> 
+							{{view Em.Select contentBinding="decimalPlaces.content" valueBinding="decimalPlaces.selected"}}
+							<p>decimal places.</p>
+						{{/if}}
+					</div>
+				</div><!--END RESULT-FORMATTING-->
+				
+				<a {{action showSolution this href=false}} class="calculate-btn button">Calculate</a>
+				</div><!--END CLASS: QUESTION-DIV-->
+			</div><!--END CLASS: WHITE BACKGROUND-->
+			
+			<div class="white-background">
+				<div class="response-div" id="MathDiv">
+					{{#if showSol}}
+						{{#with solution}}
+							{{#if transpose}}
+								<h3 class="response-title">Transpose</h3>
+								{{transpose}}
+							{{/if}}
+							{{#if trace}}
+								<h3 class="response-title">Trace</h3>
+								{{trace}}
+							{{/if}}
+							{{#if rank}}
+								<h3 class="response-title">Rank</h3>
+								{{rank}}
+							{{/if}}
+							{{#if lul}}
+								<h3 class="response-title">L</h3>
+								{{lul}}
+								<h3 class="response-title">U</h3>
+								{{luu}}
+								<h3 class="response-title">P</h3>
+								{{lup}}
+							{{/if}}
+							{{#if inverse}}
+								<h3 class="response-title">Inverse</h3>
+								{{inverse}}
+							{{/if}}
+							{{#if eigenValues}}
+								<h3 class="response-title">Eigen Values</h3>
+								{{eigenValues}}
+								<h3 class="response-title">Eigen Vectors</h3>
+								{{eigenVectors}}
+							{{/if}}
+							{{#if determinant}}
+								<h3 class="response-title">Determinant</h3>
+								{{determinant}}
+							{{/if}}
+							{{#if reduce}}
+								<h3 class="response-title">Reduced Row Echelon</h3>
+								{{reduce}}
+							{{/if}}
+						{{/with}}
+					{{/if}}
+					<a {{action goBack this href=false}} class="calculate-btn button">Go Back</a>
+				</div><!--END CLASS: RESPONSE DIV-->
+			</div><!--END CLASS: WHITE BACKGROUND-->
+			
+		</div><!--END SLIDER CONTAINER-->
+	</script>
+	<script type='text/x-handlebars' data-template-name='matrix-multiplication'>
+		<h2>{{title}}</h2>
+		<ul id="matrix-nav">
+			<li><a {{action goToSolve this href=true}} class="button">Solve System</a></li>
+			<li><a {{action goToAddSub this href=true}} class="button">Add/Subtract</a></li>
+			<li><a class="button">Multiply</a></li>
+			<li><a {{action goToOperations this href=true}} class="button">Operations</a></li>
+		</ul>
+		<div id="slider-container">
+			<div class="white-background">
+			<div class="question-div">
+				<div class="row-cols-input" id="mul-input">
+					<label for="matrix-multiplication-rows-a">Rows for matrix A:</label>
+					{{view App.RealNumberTextField id="matrix-multiplication-rows-a" loc=this varName="rowsA" value=3}}
+					<label for="matrix-multiplication-cols-a">Columns for matrix A:</label>
+					{{view App.RealNumberTextField id="matrix-multiplication-cols-a" loc=this varName="colsARowsB" value=3}}
+					<label for="matrix-multiplication-cols-b">Columns for matrix B:</label>
+					{{view App.RealNumberTextField id="matrix-multiplication-cols-b" loc=this varName="colsB" value=3}}
+				</div><!--END ROWS COLS INPUT-->
+				
+				<div id="matrix-div" class="center">
+					<table class="center">
+						<tbody>
+							<tr>
+								<td>
+									{{view App.MatrixView rowsBinding="rowsA" colsBinding="colsARowsB" inputFieldClass="matrix-a-input"}}
+								</td>
+								<td>
+									<span class="operations-symbol">&#215;</span>
+								</td>
+								<td>
+									{{view App.MatrixView rowsBinding="colsARowsB" colsBinding="colsB" inputFieldClass="matrix-b-input"}}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div><!--END CLASS: CENTER-->
+				
+				<div id="result-formatting">
+					<label for="result-format">Result Format: </label>
+					<div class='radio-container'>
+						{{view App.RadioButton id="fraction" option="fraction" group="result-formating" valueBinding="resultFormating"}}
+						<label for="fraction">Fraction</label>
+				    	{{view App.RadioButton id="decimal" option="decimal" group="result-formating" valueBinding="resultFormating"}}
+						<label for="decimal">Decimal</label>
+					</div>
+					<div id='decimal-formatting'>
+						{{#if isDecimal}}
+						  	<p>Show results with</p> 
+							{{view Em.Select contentBinding="decimalPlaces.content" valueBinding="decimalPlaces.selected"}}
+							<p>decimal places.</p>
+						{{/if}}
+					</div>
+				</div><!--END RESULT-FORMATTING-->
+				
+				<a {{action showSolution this href=false}} class="calculate-btn button">Calculate</a>
+				</div><!--END CLASS: QUESTION-DIV-->
+			</div><!--END CLASS: WHITE BACKGROUND-->
+			
+			<div class="white-background">
+				<div class="response-div" id="MathDiv">
+					{{#if solution}}
+						<h3 class="response-title">Product</h3>
+						{{solution}}
+					{{/if}}
+					<a {{action goBack this href=false}} class="calculate-btn button">Go Back</a>
+				</div><!--END CLASS: RESPONSE DIV-->
+			</div><!--END CLASS: WHITE BACKGROUND-->
+			
+		</div><!--END SLIDER CONTAINER-->
+	</script>
+	<script type='text/x-handlebars' data-template-name='matrix-addition-subtraction'>
+		<h2>{{title}}</h2>
+		<ul id="matrix-nav">
+			<li><a {{action goToSolve this href=true}} class="button">Solve System</a></li>
+			<li><a class="button">Add/Subtract</a></li>
+			<li><a {{action goToMul this href=true}} class="button">Multiply</a></li>
+			<li><a {{action goToOperations this href=true}} class="button">Operations</a></li>
+		</ul>
+		<div id="slider-container">
+			<div class="white-background">
+			<div class="question-div">
+				<div class="row-cols-input" id="add-sub-input">
+					<label for="matrix-addition-subtraction-rows-a">Rows for matrix A & B:</label>
+					{{view App.RealNumberTextField id="matrix-addition-subtraction-rows-a" loc=this varName="rows" value=3}}
+					<label for="matrix-addition-subtraction-cols-a">Columns for matrix A & B:</label>
+					{{view App.RealNumberTextField id="matrix-addition-subtraction-cols-a" loc=this varName="cols" value=3}}
+				</div><!--END ROWS COLS INPUT-->
+				
+				<div id="matrix-div" class="center">
+					<table class="center">
+						<tbody>
+							<tr>
+								<td>
+									{{view App.MatrixView rowsBinding="rows" colsBinding="cols" inputFieldClass="matrix-a-input"}}
+								</td>
+								<td>
+									<div class='radio-container-matrix'>
+										{{view App.RadioButton id="add" option="add" group="add-subtract-operations" valueBinding="addSubtractOperation"}}
+										<label for="add">&#43;</label>
+								    	{{view App.RadioButton id="subtract" option="subtract" group="add-subtract-operations" valueBinding="addSubtractOperation"}}
+										<label for="subtract">&#45;</label>
+									</div>
+								</td>
+								<td>
+									{{view App.MatrixView rowsBinding="rows" colsBinding="cols" inputFieldClass="matrix-b-input"}}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div><!--END CLASS: CENTER-->
+				
+				<div id="result-formatting">
+					<label for="result-format">Result Format: </label>
+					<div class='radio-container'>
+						{{view App.RadioButton id="fraction" option="fraction" group="result-formating" valueBinding="resultFormating"}}
+						<label for="fraction">Fraction</label>
+				    	{{view App.RadioButton id="decimal" option="decimal" group="result-formating" valueBinding="resultFormating"}}
+						<label for="decimal">Decimal</label>
+					</div>
+					<div id='decimal-formatting'>
+						{{#if isDecimal}}
+						  	<p>Show results with</p> 
+							{{view Em.Select contentBinding="decimalPlaces.content" valueBinding="decimalPlaces.selected"}}
+							<p>decimal places.</p>
+						{{/if}}
+					</div>
+				</div><!--END RESULT-FORMATTING-->
+				
+				<a {{action showSolution this href=false}} class="calculate-btn button">Calculate</a>
+				</div><!--END CLASS: QUESTION-DIV-->
+			</div><!--END CLASS: WHITE BACKGROUND-->
+			
+			<div class="white-background">
+				<div class="response-div" id="MathDiv">
+					{{#if solution}}
+						<h3 class="response-title">
+						{{#if isAdd}}
+						Sum
+						{{else}}
+						Difference
+						{{/if}}
+						</h3>
+						{{solution}}
+					{{/if}}
+					<a {{action goBack this href=false}} class="calculate-btn button">Go Back</a>
+				</div><!--END CLASS: RESPONSE DIV-->
+			</div><!--END CLASS: WHITE BACKGROUND-->
+			
+		</div><!--END SLIDER CONTAINER-->
+	</script>
+	<script type='text/x-handlebars' data-template-name='matrix-solve'>
+		<h2>{{title}}</h2>
+		<ul id="matrix-nav">
+			<li><a class="button">Solve System</a></li>
+			<li><a {{action goToAddSub this href=true}} class="button">Add/Subtract</a></li>
+			<li><a {{action goToMul this href=true}} class="button">Multiply</a></li>
+			<li><a {{action goToOperations this href=true}} class="button">Operations</a></li>
+		</ul>
+		<div id="slider-container">
+			<div class="white-background">
+			<div class="question-div">
+				<div class="row-cols-input" id="solve-input">
+					<label for="matrix-solve-rows">Rows for matrix A:</label>
+					{{view App.RealNumberTextField id="matrix-solve-rows" loc=this varName="rows" value=3}}
+					<label for="matrix-solve-cols">Columns for matrix A:</label>
+					{{view App.RealNumberTextField id="matrix-solve-cols" loc=this varName="cols" value=3}}
+				</div><!--END ROWS COLS INPUT-->
+				
+				<div id="matrix-div" class="center">
+					<table class="center">
+						<tbody>
+							<tr>
+								<td>
+									{{view App.MatrixView rowsBinding="rows" colsBinding="cols" inputFieldClass="matrix-a-input"}}
+								</td>
+								<td>
+									{{view App.MatrixView rowsBinding="rows" inputFieldClass="matrix-b-input" tableClass="matrix-b"}}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div><!--END CLASS: CENTER-->
+				
+				<div id="result-formatting">
+					<label for="result-format">Result Format: </label>
+					<div class='radio-container'>
+						{{view App.RadioButton id="fraction" option="fraction" group="result-formating" valueBinding="resultFormating"}}
+						<label for="fraction">Fraction</label>
+				    	{{view App.RadioButton id="decimal" option="decimal" group="result-formating" valueBinding="resultFormating"}}
+						<label for="decimal">Decimal</label>
+					</div>
+					<div id='decimal-formatting'>
+						{{#if isDecimal}}
+						  	<p>Show results with</p> 
+							{{view Em.Select contentBinding="decimalPlaces.content" valueBinding="decimalPlaces.selected"}}
+							<p>decimal places.</p>
+						{{/if}}
+					</div>
+				</div><!--END RESULT-FORMATTING-->
+				
+				<a {{action showSolution this href=false}} class="calculate-btn button">Calculate</a>
+				</div><!--END CLASS: QUESTION-DIV-->
+			</div><!--END CLASS: WHITE BACKGROUND-->
+			
+			<div class="white-background">
+				<div class="response-div" id="MathDiv">
+					{{#if solution}}
+						<h3 class="response-title">Solution</h3>
+						{{solution}}
+					{{/if}}
+					<a {{action goBack this href=false}} class="calculate-btn button">Go Back</a>
+				</div><!--END CLASS: RESPONSE DIV-->
+			</div><!--END CLASS: WHITE BACKGROUND-->
+			
+		</div><!--END SLIDER CONTAINER-->
+	</script>
+	
+	<!--JS-->
+	<script src="@routes.Assets.at("javascripts/libs/jquery-1.7.2.min.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("javascripts/libs/plugins.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("javascripts/libs/handlebars-1.0.0.beta.6.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("javascripts/libs/ember-1.0.0-pre.2.min.js")" type="text/javascript"></script>
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+	  tex2jax: {
+	    inlineMath: [['$','$'],['\\(','\\)']],
+	    processClass: "response-div",
+	    ignoreClass: "no-mathjax",
+	  },
+		showProcessingMessages: false,
+		messageStyle: "none"
+	});
+	</script>
+	<script type="text/javascript"
+	  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+	<script src="@routes.Assets.at("javascripts/app.js")" type="text/javascript"></script>
+}
