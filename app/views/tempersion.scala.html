@@ -1,0 +1,426 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+
+    <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+	More info: h5bp.com/b/378 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title></title>
+    <meta name="description" content="Temperature conversion application">
+    <meta name="author" content="Akash Melethil">
+
+    <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <!-- CSS concatenated and minified via ant build script-->
+    <style type="text/css">
+        /* BASIC RESET */
+
+        ul,
+        ol,
+        li,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        pre,
+        form,
+        body,
+        html,
+        p,
+        blockquote,
+        fieldset,
+        input {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #EFEAE4;
+            font-family: Helvetica, Arial, Verdana, sans-serif;
+            font-size: 16px;
+            text-align: center;
+            color: #707070;
+        }
+
+        p {
+            line-height: 20px;
+            margin-top: 20px;
+        }
+
+        header {
+            width: 100%;
+            height: 168px;
+            margin: 0 auto;
+            background-color: #2B292A;
+            border-bottom: 1px solid #141313;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            padding-top: 20px;
+            font-size: 50px;
+            font-weight: bold;
+            color: #DE3329;
+            text-shadow: 0px 3px 0px #000;
+            filter: dropshadow(color=#000, offx=0, offy=3);
+        }
+
+        header h2 {
+            color: #F7F4F0;
+            font-size: 45px;
+            font-weight: bold;
+            text-shadow: 0px 3px 0px #000;
+            filter: dropshadow(color=#000, offx=0, offy=3);
+        }
+
+        h2 {
+            font-size: 30px;
+            font-weight: bold;
+            color: #302E2E;
+        }
+
+        header h3 {
+            color: #F7F4F0;
+            padding: 5px 0px;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0px 3px 0px #000;
+            filter: dropshadow(color=#000, offx=0, offy=3);
+        }
+
+        h3 {
+            font-size: 24px;
+            color: #302E2E;
+        }
+
+        #container {
+            margin: 0px auto;
+            width: 800px;
+        }
+
+        .box {
+            width: 170px;
+            height: 110px;
+            float: left;
+            margin: 10px 10px;
+            margin-left: 17px;
+
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+        }
+
+        input {
+            display: block;
+            clear: left;
+
+            border: 1px solid #191818;
+            font-size: 14px;
+            height: 20px;
+            width: 140px;
+            margin: 20px auto;
+
+            font-family: Arial, Helvetica, Verdana, sans-serif;
+            font-size: 13px;
+            font-weight: lighter;
+
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+
+            color: #302F2E;
+            padding: 7px;
+        }
+
+        input:focus {
+            border: 1px solid #99231D;
+        }
+
+        label {
+            color: #302E2E;
+            font-size: 20px;
+            font-weight: bold;
+            float: left;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            width: 180px;
+        }
+
+        #response {
+            float: left;
+            width: 800px;
+            color: #707070;
+            margin: 10px 10px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        #input-container {
+            margin: 0 auto;
+        }
+
+        table {
+            margin: 20px auto;
+        }
+
+        table tr:first-child,
+        tr td:first-child {
+            font-weight: bold;
+            color: #302E2E;
+        }
+
+        table tr:first-child td:first-child {
+            border: none;
+        }
+
+        td {
+            border: 1px solid #302E2E;
+            padding: 7px;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #DE3329;
+        }
+
+        a:hover {
+            color: #99231D;
+        }
+
+        footer {
+            width: 100%;
+            height: 40px;
+            margin: 0 auto;
+            margin-top: 20px;
+            background-color: #2B292A;
+            border-top: 1px solid #141313;
+            position: absolute;
+            bottom: 0;
+        }
+
+        footer p {
+            font-weight: lighter;
+            font-size: 12px;
+            text-shadow: 0px 1px 0px #000;
+            filter: dropshadow(color=#000, offx=0, offy=1);
+            margin: 0 auto;
+            padding-top: 10px;
+        }
+
+        table tr:not(:first-child) td:not(:first-child) {
+            font-size: 14px;
+        }
+    </style>
+    <!-- end CSS-->
+
+    <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+
+    <!-- All JavaScript at the bottom, except for Modernizr / Respond.
+		Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
+		For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
+    <script src="js/libs/modernizr-2.0.6.min.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <h1>i<a href="/">HWHelp</a></h1>
+        <h3>presents</h3>
+        <h2>Tempersion</h2>
+    </header>
+
+    <div id="container">
+        <div id="input-container">
+            <div id="div-celsisus" class="box">
+                <label for="c">Celsius</label><input class="input" id="input-celsius" type="text" name="c" />
+            </div>
+            <div id="div-fahrenheit" class="box">
+                <label for="f">Fahrenheit</label><input class="input" id="input-fahrenheit" type="text" name="f" />
+            </div>
+            <div id="div-kelvin" class="box">
+                <label for="k">Kelvin</label><input class="input" id="input-kelvin" type="text" name="k" />
+            </div>
+            <div id="div-rankine" class="box">
+                <label for="r">Rankine</label><input class="input" id="input-rankine" type="text" name="r" />
+            </div>
+            <p id="response"></p>
+        </div>
+        <!--END INPUT CONTAINER-->
+        <h3>How does the conversion work?</h3>
+        <table>
+            <tr>
+                <td></td>
+                <td>Celsius</td>
+                <td>Fahrenheit</td>
+                <td>Kelvin</td>
+                <td>Rankine</td>
+            </tr>
+            <tr>
+                <td>Celsius</td>
+                <td>NA</td>
+                <td>F = C x (9/5) + 32</td>
+                <td>K = C + 273.15</td>
+                <td>R = (C + 273.15)*(9/5)</td>
+            </tr>
+            <tr>
+                <td>Fahrenheit</td>
+                <td>C = (F-32) x (5/9)</td>
+                <td>NA</td>
+                <td>K = (F + 459.67) x (5/9)</td>
+                <td>R = F + 459.67</td>
+            </tr>
+            <tr>
+                <td>Kelvin</td>
+                <td>C = K - 273.15</td>
+                <td>F = K x (9/5) - 459.67</td>
+                <td>NA</td>
+                <td>R = K x (9/5)</td>
+            </tr>
+            <tr>
+                <td>Rankine</td>
+                <td>C = (R - 491.67) x (5/9)</td>
+                <td>F = R - 459.67</td>
+                <td>K = R x (5/9)</td>
+                <td>NA</td>
+            </tr>
+        </table>
+        <h3>What is "Tempersion"?</h3>
+        <p>Tempersion is an online temperature conversion application by <a href="/">HWHelp</a>. The table above shows the formulas used to calculate the conversions.</p>
+    </div>
+
+    <footer>
+        <p>Copyright © 2012 HWHelp. All rights reserved.</p>
+    </footer>
+
+    </div>
+    <!--! end of #container -->
+
+
+    <!-- JavaScript at the bottom for fast page loading -->
+    <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="../js/libs/jquery-1.7.1.min.js"><\/script>')
+    </script>
+
+    <!-- scripts concatenated and minified via ant build script-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var responseCtr = 0;
+            function calcCel(c, event) {
+                if (!isNaN(c) && c != '') {
+                    f = Number(c) * (9 / 5) + 32;
+                    k = Number(c) + 273.15;
+                    r = (Number(c) + 273.15) * (9 / 5);
+
+                    $('#input-fahrenheit').val(f);
+                    $('#input-kelvin').val(k);
+                    $('#input-rankine').val(r);
+                }
+                else {
+                    if (!(event.keyCode == 8))
+                        respondToNoobs();
+                }
+            }
+            function calcFah(f, event) {
+                if (!isNaN(f) && f != '') {
+                    c = (Number(f) - 32) * 5 / 9;
+                    k = (Number(f) + 459.67) * (5 / 9);
+                    r = Number(f) + 459.67;
+
+                    $('#input-celsius').val(c);
+                    $('#input-kelvin').val(k);
+                    $('#input-rankine').val(r);
+                }
+                else {
+                    if (!(event.keyCode == 8))
+                        respondToNoobs();
+                }
+            }
+            function calcKel(k, event) {
+                if (!isNaN(k) && k != '') {
+                    c = Number(k) - 273.15;
+                    f = Number(k) * (9 / 5) - 459.67;
+                    r = Number(k) * (9 / 5);
+
+                    $('#input-celsius').val(c);
+                    $('#input-fahrenheit').val(f);
+                    $('#input-rankine').val(r);
+                }
+                else {
+                    if (!(event.keyCode == 8))
+                        respondToNoobs();
+                }
+            }
+            function calcRan(r, event) {
+                if (!isNaN(r) && r != '') {
+                    c = (Number(r) - 491.67) * 5 / 9;
+                    f = Number(r) - 459.67;
+                    k = Number(r) * 5 / 9;
+
+                    $('#input-celsius').val(c);
+                    $('#input-fahrenheit').val(f);
+                    $('#input-kelvin').val(k);
+                }
+                else {
+                    if (!(event.keyCode == 8))
+                        respondToNoobs();
+                }
+            }
+            function respondToNoobs() {
+                clearEverything();
+
+                var responses = new Array("Wise guy eh? Stick to numbers noob.", "Dude/Dudette srsly?", "Cannot compute...maybe you should try to convert more letters.", "I don't speak spanish!");
+                $('#response').text(responses[responseCtr]);
+
+                //$("<p style='display:none;'>"+responses[responseCtr]+'</p>').appendTo('#container');
+                responseCtr++;
+                if (responseCtr >= (Number(responses.length))) {
+                    responseCtr = 0;
+                }
+                $('#response').fadeIn(500).delay(5000).fadeOut(500);
+            }
+            function clearEverything() {
+                $('#input-celsius').val('');
+                $('#input-fahrenheit').val('');
+                $('#input-kelvin').val('');
+                $('#input-rankine').val('');
+            }
+
+            $('#input-celsius').keyup(function (event) {
+                var c = $(this).val();
+                calcCel(c, event);
+            });
+            $('#input-fahrenheit').keyup(function (event) {
+                var f = $(this).val();
+                calcFah(f, event);
+            });
+            $('#input-kelvin').keyup(function (event) {
+                var k = $(this).val();
+                calcKel(k, event);
+            });
+            $('#input-rankine').keyup(function (event) {
+                var r = $(this).val();
+                calcRan(r, event);
+            });
+        });
+    </script>
+    <!-- end scripts-->
+</body>
+</html>

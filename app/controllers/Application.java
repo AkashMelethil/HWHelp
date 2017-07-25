@@ -41,7 +41,7 @@ public class Application extends Controller {
 	}
 	
 	public static Result temperatureConverter() {
-		return ok(temperatureConverter.render());
+		return ok(tempersion.render());
 	}
 	//END Static
 	
