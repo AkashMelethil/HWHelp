@@ -1,6 +1,7 @@
 logs
 project/project
 project/target
+.DS_Store
 target
 tmp
 .history

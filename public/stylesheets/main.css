@@ -525,6 +525,8 @@ a:hover{
 	margin-left:10px;
 	margin-bottom:20px;
 }
+
+/*MATRIX CALCULATOR*/
 #matrix-nav{
 	float:left;
 	list-style:none;
@@ -637,6 +639,7 @@ span.operations-symbol{
 	margin-right:20px;
 }
 
+/*TEMPERATURE CONVERTER*/
 
 
 

@@ -39,6 +39,10 @@ public class Application extends Controller {
 	public static Result matrixCalculator() {
 		return ok(matrixCalculator.render());
 	}
+	
+	public static Result temperatureConverter() {
+		return ok(temperatureConverter.render());
+	}
 	//END Static
 	
 	//ASYNC

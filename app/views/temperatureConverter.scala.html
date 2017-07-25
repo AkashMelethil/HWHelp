@@ -1,0 +1,99 @@
+@main("HWHelp Temperature Converter") {
+    
+    <div id='container'>
+		<header>
+			<div id="title-slogan">
+				<h1 id="main-title">HWHelp</h1>
+				<p class="italics" id="slogan">
+					Almost cheating <span class="normal red">:)</span>
+				</p>
+			</div>
+			<ul id="nav">
+				<li id="nav_home"><a href="/">Home</a></li>
+				<li id="nav_support"><a href="/support">Support</a></li>
+				<li id="nav_about"><a href="/about">About</a></li>
+			</ul>
+		</header>
+		<div id='main'>
+			<div id="spinner-div"></div>
+			<h2>Temperature Converter</h2>
+			<div class="white-background static-page">
+				<div id="input-container">
+					<div id="div-celsisus" class="box">
+						<label for="c">Celsius</label><input class="input" id="input-celsius" type="text" name="c"/>
+					</div>
+					<div id="div-fahrenheit" class="box">
+						<label for="f">Fahrenheit</label><input class="input" id="input-fahrenheit" type="text" name="f"/>
+					</div>
+					<div id="div-kelvin" class="box">
+						<label for="k">Kelvin</label><input class="input" id="input-kelvin" type="text" name="k"/>
+					</div>
+					<div id="div-rankine" class="box">
+						<label for="r">Rankine</label><input class="input" id="input-rankine" type="text" name="r"/>
+					</div>
+					<p id="response"></p>
+				</div><!--END INPUT CONTAINER-->
+				<h3>How does the conversion work?</h3>
+				<table>
+					<tr>
+						<td></td>
+						<td>Celsius</td>
+						<td>Fahrenheit</td>
+						<td>Kelvin</td>
+						<td>Rankine</td>
+					</tr>
+					<tr>
+						<td>Celsius</td>
+						<td>NA</td>
+						<td>F = C x (9/5) + 32</td>
+						<td>K = C + 273.15</td>
+						<td>R = (C + 273.15)*(9/5)</td>
+					</tr>
+					<tr>
+						<td>Fahrenheit</td>
+						<td>C = (F-32) x (5/9)</td>
+						<td>NA</td>
+						<td>K = (F + 459.67) x (5/9)</td>
+						<td>R = F + 459.67</td>
+					</tr>
+					<tr>
+						<td>Kelvin</td>
+						<td>C = K - 273.15</td>
+						<td>F = K x (9/5) - 459.67</td>
+						<td>NA</td>
+						<td>R = K x (9/5)</td>
+					</tr>
+					<tr>
+						<td>Rankine</td>
+						<td>C = (R - 491.67) x (5/9)</td>
+						<td>F = R - 459.67</td>
+						<td>K = R x (5/9)</td>
+						<td>NA</td>
+					</tr>
+				</table>
+			</div><!--END CALSS INDEX-->
+		</div><!--END MAIN-->
+		<footer>
+			<p>Copyright &copy; 2013 SkyArc Studios. All rights reserved.</p>
+		</footer>
+	</div><!--END CONTAINER-->
+	
+    <!--JS-->
+	<script src="@routes.Assets.at("javascripts/libs/jquery-1.7.2.min.js")" type="text/javascript"></script>
+	<script src="@routes.Assets.at("javascripts/libs/plugins.js")" type="text/javascript"></script>
+	<script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+	  tex2jax: {
+	    inlineMath: [['$','$'],['\\(','\\)']],
+	    processClass: "response-div",
+	    ignoreClass: "no-mathjax",
+	  },
+		showProcessingMessages: false,
+		messageStyle: "none"
+	});
+	</script>
+	<script type="text/javascript"
+	  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+	<script src="@routes.Assets.at("javascripts/temperature-converter-app.js")" type="text/javascript"></script>
+}
